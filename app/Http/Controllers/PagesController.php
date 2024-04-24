@@ -470,7 +470,7 @@ class PagesController extends Controller
       'email' => $request->email,
       'phone' => $request->phone,
     ], function ($message) {
-      $message->to('ikromr04@gmail.com');
+      $message->to('drugsafety@evolet.co.uk');
       $message->subject('Сообщение о жалобе на продукт');
     });
 
