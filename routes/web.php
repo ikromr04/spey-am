@@ -25,6 +25,7 @@ Route::get('/localization', [MainController::class, 'setLocale'])->name('localiz
 // Pages' routes
 Route::get('/', [PagesController::class, 'index'])->name('home');
 Route::get('/about', [PagesController::class, 'about'])->name('about');
+Route::post('/ae', [PagesController::class, 'ae'])->name('ae');
 Route::get('/products', [PagesController::class, 'products'])->name('products');
 Route::get('/products/{slug}', [PagesController::class, 'productsRead'])->name('products.read');
 Route::get('/news', [PagesController::class, 'news'])->name('news');
