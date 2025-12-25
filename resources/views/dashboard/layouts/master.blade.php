@@ -10,6 +10,7 @@
   <meta name="googlebot" content="noindex, nofollow">
   <meta name="yandex" content="none">
   <title>Spey - международная фармацевтическая компания</title>
+  <link rel="stylesheet" href="https://unpkg.com/multiple-select@2.2.0/dist/multiple-select.min.css">
   {{-- Simditor styles --}}
   <link rel="stylesheet" href="{{ asset('css/simditor.css') }}">
   {{-- App Styles --}}
@@ -41,8 +42,10 @@
   <script src="{{ asset('js/hotkeys.js') }}"></script>
   <script src="{{ asset('js/uploader.js') }}"></script>
   <script src="{{ asset('js/simditor.js') }}"></script>
+  <script src="https://unpkg.com/multiple-select@2.2.0/dist/multiple-select.min.js"></script>
   {{-- App Scripts --}}
   <script src="{{ mix('js/dashboard.js') }}"></script>
+  @yield('script')
 </body>
 
 </html>

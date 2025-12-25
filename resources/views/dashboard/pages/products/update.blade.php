@@ -71,11 +71,11 @@
         <input class="product-icon-input visually-hidden" id="ampulse" type="radio" name="icon" value="ampulse.svg" {{ $product->icon === 'ampulse.svg' ? 'checked' : '' }}>
         <label class="product-icon product-icon--ampulse" for="ampulse">Ампулы</label>
       </fieldset>
-      <fieldset class="form__element">
+      <fieldset class="form__element" style="z-index: 10;">
         <label class="form__label" for="categories">Категория</label>
-        <select class="form__select" name="category-id" id="categories" required>
+        <select class="form__select" name="categories[]" id="categories" multiple="multiple" required>
           @foreach ($categories as $category)
-            <option value="{{ $category->id }}" {{ $product->category_id == $category->id ? 'selected' : '' }}>{{ $category->title }}</option>
+            <option value="{{ $category->id }}" {{ in_array($category->id, $product->categories->pluck('id')->toArray()) ? 'selected' : '' }}>{{ $category->title }}</option>
           @endforeach
         </select>
       </fieldset>
@@ -151,4 +151,10 @@
       </fieldset>
     </form>
   </main>
+@endsection
+
+@section('script')
+  <script>
+    $('#categories').multipleSelect();
+  </script>
 @endsection

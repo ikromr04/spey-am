@@ -5,7 +5,9 @@
   <div class="product-card__body" data-type="product-card">
     <h3 class="product-card__title" data-type="product-card">
       {!! $product->title !!}
-      <div class="product-card__mode" data-type="product-card">{{!$product->category->trashed ? $product->category->$title : ''}}</div>
+      <div class="product-card__mode" data-type="product-card">
+        {!! $product->categories->where('trashed', false)->pluck($locale . '_title')->join(', ') !!}
+      </div>
     </h3>
     <div class="products-card__view-more">
       <span class="products-card__view-more-icon">

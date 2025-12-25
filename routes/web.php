@@ -40,10 +40,10 @@ Route::get('/auth/logout', [AuthController::class, 'logout'])->name('auth.logout
 // search route
 Route::get('/search', [MainController::class, 'search']);
 
-Route::group(['middleware' => ['AuthCheck']], function () {
+// Route::group(['middleware' => ['AuthCheck']], function () {
   Route::get('/auth/login', [AuthController::class, 'login'])->name('auth.login');
 
-  Route::group(['middleware' => ['AdminCheck']], function () {
+  // Route::group(['middleware' => ['AdminCheck']], function () {
     // dashboard pages
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard/products/create', [DashboardController::class, 'productsCreate'])->name('dashboard.products.create');
@@ -82,5 +82,5 @@ Route::group(['middleware' => ['AuthCheck']], function () {
     Route::post('/histories/update', [HistoriesController::class, 'update'])->name('histories.update');
     Route::post('/histories/delete', [HistoriesController::class, 'delete'])->name('histories.delete');
     Route::get('/dashboard/histories/search', [HistoriesController::class, 'dashSearch'])->name('dashboard.histories.search');
-  });
-});
+  // });
+// });

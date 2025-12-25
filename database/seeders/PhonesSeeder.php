@@ -16,57 +16,20 @@ class PhonesSeeder extends Seeder
   public function run()
   {
     $phones = array(
-      array(
-        'id' => 1,
-        'site_id' => 1,
-        'numbers' => '+44-203-598-2050',
-      ),
-      array(
-        'id' => 2,
-        'site_id' => 5,
-        'numbers' => '+7 (495) 781-37-42',
-      ),
-      array(
-        'id' => 3,
-        'site_id' => 8,
-        'numbers' => '+44-203-598-2050',
-      ),
-      array(
-        'id' => 4,
-        'site_id' => 12,
-        'numbers' => '+919311404005',
-      ),
-      array(
-        'id' => 5,
-        'site_id' => 13,
-        'numbers' => '+998 78 122 2882',
-      ),
-      array(
-        'id' => 6,
-        'site_id' => 14,
-        'numbers' => '+9 (96) 312-312-908',
-      ),
-      array(
-        'id' => 8,
-        'site_id' => 15,
-        'numbers' => '+992 (37) 236-89-56',
-      ),
-      array(
-        'id' => 9,
-        'site_id' => 7,
-        'numbers' => '+37494520710',
-      ),
-      array(
-        'id' => 10,
-        'site_id' => 7,
-        'numbers' => '+37455965504',
-      ),
+      array('id' => '1', 'site_id' => '1', 'numbers' => '+91-9311-40-40-05', 'trashed' => '0', 'created_at' => '2022-02-11 18:29:56', 'updated_at' => '2022-02-11 18:29:56'),
+      array('id' => '2', 'site_id' => '2', 'numbers' => '+7 (495) 781-37-42', 'trashed' => '0', 'created_at' => '2022-02-11 18:29:56', 'updated_at' => '2022-02-11 18:29:56'),
+      array('id' => '3', 'site_id' => '3', 'numbers' => '+7 (727) 271-80-78', 'trashed' => '0', 'created_at' => '2022-02-11 18:29:56', 'updated_at' => '2022-02-11 18:29:56'),
+      array('id' => '4', 'site_id' => '4', 'numbers' => '+998 78 122 2882', 'trashed' => '0', 'created_at' => '2022-02-11 18:29:56', 'updated_at' => '2022-02-11 18:29:56'),
+      array('id' => '5', 'site_id' => '5', 'numbers' => '+9 (96) 312-312-908', 'trashed' => '0', 'created_at' => '2022-02-11 18:29:56', 'updated_at' => '2022-02-11 18:29:56'),
+      array('id' => '6', 'site_id' => '6', 'numbers' => '+992 (37) 236-89-56', 'trashed' => '0', 'created_at' => '2022-02-11 18:29:56', 'updated_at' => '2022-02-11 18:29:56'),
+      array('id' => '7', 'site_id' => '8', 'numbers' => '+44-203-598-2050', 'trashed' => '0', 'created_at' => '2022-02-11 18:29:56', 'updated_at' => '2022-02-11 18:29:56'),
+      array('id' => '8', 'site_id' => '7', 'numbers' => '+37455965504', 'trashed' => '0', 'created_at' => NULL, 'updated_at' => NULL),
+      array('id' => '9', 'site_id' => '7', 'numbers' => '+37494520710', 'trashed' => '0', 'created_at' => NULL, 'updated_at' => NULL),
+      array('id' => '10', 'site_id' => '16', 'numbers' => '+976 90089969', 'trashed' => '0', 'created_at' => NULL, 'updated_at' => NULL)
     );
-    foreach ($phones as $phone) {
-      $tel = new Phone;
-      $tel->site_id = $phone['site_id'];
-      $tel->numbers = $phone['numbers'];
-      $tel->save();
+
+    foreach ($phones as $item) {
+      Phone::create($item);
     }
   }
 }

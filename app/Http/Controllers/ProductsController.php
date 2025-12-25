@@ -16,7 +16,6 @@ class ProductsController extends Controller
     // Find products
     $products = Product::select(
       'products.id',
-      'products.category_id',
       'products.' . $locale . '_title as title',
       'slug',
       'products.recipe',
@@ -29,7 +28,7 @@ class ProductsController extends Controller
     switch ($request->filter) {
       case 'with-recipe':
         if ($request->category) {
-          $products = $products->where('recipe', true)->where('category_id', $request->category)->paginate(6);
+          $products = $products->where('recipe', true)->paginate(6);
           $recipe = true;
           $currentCategory = ProductsCategory::find($request->category);
           return view('pages.products.data.products', compact('products', 'recipe', 'currentCategory'))->render();
@@ -42,7 +41,7 @@ class ProductsController extends Controller
 
       case 'without-recipe':
         if ($request->category) {
-          $products = $products->where('recipe', false)->where('category_id', $request->category)->paginate(6);
+          $products = $products->where('recipe', false)->paginate(6);
           $recipe = false;
           $currentCategory = ProductsCategory::find($request->category);
           return view('pages.products.data.products', compact('products', 'recipe', 'currentCategory'))->render();
@@ -55,7 +54,7 @@ class ProductsController extends Controller
 
       default:
         if ($request->category) {
-          $products = $products->where('category_id', $request->category)->paginate(6);
+          $products = $products->paginate(6);
           $currentCategory = ProductsCategory::find($request->category);
           return view('pages.products.data.products', compact('products', 'currentCategory'))->render();
         } else {
@@ -90,11 +89,13 @@ class ProductsController extends Controller
   public function create(Request $request)
   {
     $request->validate([
-      'category-id' => 'required',
+      'categories' => 'required',
       'prescription' => 'required',
       'ru-title' => 'required',
       'en-title' => 'required',
     ]);
+
+    $categories = $request->input('categories');
 
     $imgName = 'muffin-grey.svg';
     if ($request->has('photo')) {
@@ -121,7 +122,6 @@ class ProductsController extends Controller
     $product = Product::create([
       'img' => $imgName,
       'icon' => request('icon'),
-      'category_id' => request('category-id'),
       'recipe' => request('prescription'),
       'ru_title' => request('ru-title'),
       'en_title' => request('en-title'),
@@ -139,6 +139,8 @@ class ProductsController extends Controller
     ]);
 
     if ($product) {
+      $product->categories()->attach($categories);
+
       return back()->with('success', 'Новый продукт успешно добавлен!');
     } else {
       return back()->with('fail', 'Упс... Что-то пошло не так попробуйте позже!');
@@ -148,11 +150,13 @@ class ProductsController extends Controller
   public function update(Request $request)
   {
     $request->validate([
-      'category-id' => 'required',
+      'categories' => 'required',
       'prescription' => 'required',
       'ru-title' => 'required',
       'en-title' => 'required',
     ]);
+
+    $categories = $request->input('categories');
 
     $product = Product::find(request('product-id'));
 
@@ -168,7 +172,6 @@ class ProductsController extends Controller
     }
 
     $product->icon = request('icon');
-    $product->category_id = request('category-id');
     $product->recipe = request('prescription');
     $product->ru_title = request('ru-title');
     $product->en_title = request('en-title');
@@ -220,6 +223,9 @@ class ProductsController extends Controller
     $update = $product->update();
 
     if ($update) {
+      $product->categories()->detach();
+      $product->categories()->attach($categories);
+
       return back()->with('success', 'Продукт успешно изменен!');
     } else {
       return back()->with('fail', 'Упс... Что-то пошло не так попробуйте позже!');

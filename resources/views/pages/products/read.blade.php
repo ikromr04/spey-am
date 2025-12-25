@@ -4,8 +4,8 @@
 
 @section('meta-tags')
   @php
-  $share_text = preg_replace('#<[^>]+>#', ' ', $product->description);
-  $share_text = mb_strlen($share_text) < 170 ? $share_text : mb_substr($share_text, 0, 166) . '...';
+    $share_text = preg_replace('#<[^>]+>#', ' ', $product->description);
+    $share_text = mb_strlen($share_text) < 170 ? $share_text : mb_substr($share_text, 0, 166) . '...';
   @endphp
   <meta name="description" content="{{ $share_text }}">
   <meta property="og:description" content="{{ $share_text }}">

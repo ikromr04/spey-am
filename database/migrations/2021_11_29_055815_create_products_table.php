@@ -17,7 +17,6 @@ class CreateProductsTable extends Migration
       $table->id();
       $table->string('img')->default('default.png');
       $table->string('icon')->nullable();
-      $table->integer('category_id');
       $table->string('en_title');
       $table->string('ru_title');
       $table->string('slug')->unique();

@@ -70,9 +70,9 @@
         <input class="product-icon-input visually-hidden" id="ampulse" type="radio" name="icon" value="ampulse.svg">
         <label class="product-icon product-icon--ampulse" for="ampulse">Ампулы</label>
       </fieldset>
-      <fieldset class="form__element">
+      <fieldset class="form__element" style="z-index: 10;">
         <label class="form__label" for="categories">Категория</label>
-        <select class="form__select" name="category-id" id="categories" required>
+        <select class="form__select" name="categories[]" id="categories" multiple="multiple" required>
           @foreach ($categories as $category)
             <option value="{{ $category->id }}">{{ $category->title }}</option>
           @endforeach
@@ -142,4 +142,10 @@
       </fieldset>
     </form>
   </main>
+@endsection
+
+@section('script')
+  <script>
+    $('#categories').multipleSelect();
+  </script>
 @endsection

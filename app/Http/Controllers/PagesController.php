@@ -92,7 +92,6 @@ class PagesController extends Controller
     // Get 6 most popular products
     $data->popularProducts = Product::select(
       'id',
-      'category_id',
       $locale . '_title as title',
       'slug',
       'img',
@@ -223,7 +222,6 @@ class PagesController extends Controller
       // Get products by category
       $data->products = Product::select(
         'id',
-        'category_id',
         $locale . '_title as title',
         'slug',
         'img',
@@ -231,7 +229,6 @@ class PagesController extends Controller
         'view_rate',
         'trashed',
       )->where('trashed', false)
-        ->where('category_id', $request->category)
         ->orderBy('view_rate', 'desc')
         ->paginate(6);
 
@@ -248,7 +245,6 @@ class PagesController extends Controller
       // Get all products
       $data->products = Product::select(
         'id',
-        'category_id',
         $locale . '_title as title',
         'slug',
         'img',
@@ -273,7 +269,6 @@ class PagesController extends Controller
     // Get product
     $product = Product::select(
       'id',
-      'category_id',
       $locale . '_title as title',
       'slug',
       $locale . '_instruction as instruction',
@@ -288,12 +283,6 @@ class PagesController extends Controller
     // increase view rate
     $product->view_rate++;
     $product->save();
-    $productCategory = ProductsCategory::select(
-      'id',
-      'view_rate',
-    )->find($product->category_id);
-    $productCategory->view_rate++;
-    $productCategory->save();
     // Get products' category's titles
     $productsCategories = ProductsCategory::select(
       'id',
@@ -303,14 +292,13 @@ class PagesController extends Controller
     // Get similar products
     $similarProducts = Product::select(
       'id',
-      'category_id',
       $locale . '_title as title',
       'slug',
       'img',
       'icon',
       'view_rate',
       'trashed',
-    )->where('trashed', false)->where('category_id', $product->category_id)->orderBy('view_rate', 'desc')->get();
+    )->where('trashed', false)->orderBy('view_rate', 'desc')->get();
 
     return view('pages.products.read', compact('product', 'productsCategories', 'similarProducts'));
   }
