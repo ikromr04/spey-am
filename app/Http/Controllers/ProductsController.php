@@ -23,38 +23,52 @@ class ProductsController extends Controller
       'icon',
       'products.view_rate',
       'trashed'
-    )->where('trashed', false)->where('products.' . $locale . '_title', 'like', '%' . $request->keyword . '%')->orderBy('products.view_rate', 'desc');
+    )->where('trashed', false)
+      ->where('products.' . $locale . '_title', 'like', '%' . $request->keyword . '%')
+      ->orderBy('products.view_rate', 'desc');
+
+    $category = $request->category;
 
     switch ($request->filter) {
       case 'with-recipe':
-        if ($request->category) {
-          $products = $products->where('recipe', true)->paginate(6);
+        if ($category) {
+          $products = $products->where('recipe', true)->whereHas('categories', function ($query) use ($category) {
+            $query->where('products_categories.id', $category);
+          })->paginate(6);
           $recipe = true;
           $currentCategory = ProductsCategory::find($request->category);
           return view('pages.products.data.products', compact('products', 'recipe', 'currentCategory'))->render();
         } else {
-          $products = $products->where('recipe', true)->paginate(6);
+          $products = $products->where('recipe', true)->whereHas('categories', function ($query) use ($category) {
+            $query->where('products_categories.id', $category);
+          })->paginate(6);
           $recipe = true;
           return view('pages.products.data.products', compact('products', 'recipe'))->render();
         }
         break;
 
       case 'without-recipe':
-        if ($request->category) {
-          $products = $products->where('recipe', false)->paginate(6);
+        if ($category) {
+          $products = $products->where('recipe', false)->whereHas('categories', function ($query) use ($category) {
+            $query->where('products_categories.id', $category);
+          })->paginate(6);
           $recipe = false;
           $currentCategory = ProductsCategory::find($request->category);
           return view('pages.products.data.products', compact('products', 'recipe', 'currentCategory'))->render();
         } else {
-          $products = $products->where('recipe', false)->paginate(6);
+          $products = $products->where('recipe', false)->whereHas('categories', function ($query) use ($category) {
+            $query->where('products_categories.id', $category);
+          })->paginate(6);
           $recipe = false;
           return view('pages.products.data.products', compact('products', 'recipe'))->render();
         }
         break;
 
       default:
-        if ($request->category) {
-          $products = $products->paginate(6);
+        if ($category) {
+          $products = $products->whereHas('categories', function ($query) use ($category) {
+            $query->where('products_categories.id', $category);
+          })->paginate(6);
           $currentCategory = ProductsCategory::find($request->category);
           return view('pages.products.data.products', compact('products', 'currentCategory'))->render();
         } else {
