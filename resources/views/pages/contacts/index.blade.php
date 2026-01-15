@@ -134,7 +134,7 @@
           </ul>
         @endif
       </div>
-      @if ($activeSite)
+      @if ($activeSite->map)
         <div class="map-wrap">
           {!! $activeSite->map !!}
         </div>
